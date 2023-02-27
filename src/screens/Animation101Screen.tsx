@@ -1,16 +1,21 @@
 import {View, StyleSheet, Animated, Button} from 'react-native';
-import React from 'react';
+import React, {useContext} from 'react';
 import {useAnimation} from '../hooks/useAnimation';
+import {ThemeContext} from '../context/themeContext/ThemeContext';
 
 export const Animation101Screen = () => {
   const {fadeIn, fadeOut, opacity, position, startMovingPosition} =
     useAnimation();
+  const {
+    theme: {colors},
+  } = useContext(ThemeContext);
 
   return (
     <View style={styles.container}>
       <Animated.View
         style={{
           ...styles.purpleBos,
+          backgroundColor: colors.primary,
           opacity,
           transform: [{translateX: position}],
         }}
@@ -21,8 +26,9 @@ export const Animation101Screen = () => {
           startMovingPosition(100);
         }}
         title="Fade In"
+        color={colors.primary}
       />
-      <Button onPress={fadeOut} title="Fade Out" />
+      <Button onPress={fadeOut} title="Fade Out" color={colors.primary} />
     </View>
   );
 };
@@ -34,7 +40,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   purpleBos: {
-    backgroundColor: '#5856D6',
     marginBottom: 20,
     width: 150,
     height: 150,

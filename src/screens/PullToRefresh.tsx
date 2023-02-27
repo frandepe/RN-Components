@@ -1,13 +1,17 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {RefreshControl, ScrollView, View} from 'react-native';
 import {HeaderTitle} from '../components/HeaderTitle';
 import {styles} from '../theme/appTheme';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {ThemeContext} from '../context/themeContext/ThemeContext';
 
 export const PullToRefresh = () => {
   const {top} = useSafeAreaInsets();
   const [refreshing, setRefreshing] = useState(false);
   const [data, setData] = useState<string>();
+  const {
+    theme: {colors, dividerColor, dark},
+  } = useContext(ThemeContext);
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -26,10 +30,10 @@ export const PullToRefresh = () => {
           refreshing={refreshing}
           onRefresh={onRefresh}
           progressViewOffset={10} // solo android
-          progressBackgroundColor="#5856D6"
-          colors={['white', 'red', 'orange']}
+          progressBackgroundColor={dividerColor}
+          colors={[colors.text]}
           style={{backgroundColor: 'yellow'}} // solo en ios
-          tintColor="white" // solo ios
+          tintColor={dark ? 'white' : 'black'} // solo ios
           title="Refreshing" // solo ios
         />
       }>
